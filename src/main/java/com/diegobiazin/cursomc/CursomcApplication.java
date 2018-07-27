@@ -109,6 +109,5 @@ public class CursomcApplication implements CommandLineRunner {
         p3.getItens().addAll(asList(ip2));
 
         itemPedidoRepository.saveAll(asList(ip1, ip2, ip3));
-
     }
 }
