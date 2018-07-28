@@ -1,5 +1,6 @@
 package com.diegobiazin.cursomc.services;
 
+import com.diegobiazin.cursomc.DTO.CategoriaDTO;
 import com.diegobiazin.cursomc.domain.Categoria;
 import com.diegobiazin.cursomc.repositories.CategoriaRepository;
 import com.diegobiazin.cursomc.services.exceptions.DataIntegrityException;
@@ -53,6 +54,10 @@ public class CategoriaService {
         PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction),
                 orderBy);
         return categoriaRepository.findAll(pageRequest);
+    }
+
+    public Categoria fromDto(CategoriaDTO objDto){
+        return new Categoria(objDto.getId(), objDto.getNome());
     }
 
 }
