@@ -36,4 +36,10 @@ public class CategoriaResource {
         obj = categoriaService.update(obj);
         return ResponseEntity.noContent().build();
     }
+
+    @DeleteMapping(path = "/{id}")
+    public ResponseEntity<Void> delete( @PathVariable Integer id){
+        categoriaService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }
