@@ -1,6 +1,7 @@
 package com.diegobiazin.cursomc.resources;
 
 import com.diegobiazin.cursomc.DTO.ClienteDTO;
+import com.diegobiazin.cursomc.DTO.ClienteNewDTO;
 import com.diegobiazin.cursomc.domain.Cliente;
 import com.diegobiazin.cursomc.domain.Cliente;
 import com.diegobiazin.cursomc.services.ClienteService;
@@ -33,6 +34,15 @@ public class ClienteResource {
         List<Cliente> list = clienteService.findAll();
         List<ClienteDTO> listDto = list.stream().map(ClienteDTO::new).collect(Collectors.toList());
         return ResponseEntity.ok().body(listDto);
+    }
+
+    @PostMapping
+    public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewDTO objDto) {
+        Cliente obj = clienteService.fromDto(objDto);
+        obj = clienteService.insert(obj);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}").buildAndExpand(obj.getId()).toUri();
+        return ResponseEntity.created(uri).build();
     }
 
     @PutMapping(path = "/{id}")

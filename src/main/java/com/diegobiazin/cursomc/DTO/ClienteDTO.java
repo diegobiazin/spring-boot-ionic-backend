@@ -20,9 +20,10 @@ public class ClienteDTO implements Serializable {
     @Email(message = "Email inválido")
     private String email;
 
-    public ClienteDTO(){}
+    public ClienteDTO() {
+    }
 
-    public ClienteDTO(Cliente obj){
+    public ClienteDTO(Cliente obj) {
         id = obj.getId();
         nome = obj.getNome();
         email = obj.getEmail();
