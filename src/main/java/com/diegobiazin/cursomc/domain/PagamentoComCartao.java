@@ -1,6 +1,7 @@
 package com.diegobiazin.cursomc.domain;
 
 import com.diegobiazin.cursomc.domain.enums.EstadoPagamento;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 
 import javax.persistence.Entity;
 
