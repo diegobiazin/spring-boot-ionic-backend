@@ -5,6 +5,7 @@ import com.diegobiazin.cursomc.domain.enums.EstadoPagamento;
 import com.diegobiazin.cursomc.domain.enums.TipoCliente;
 import com.diegobiazin.cursomc.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -14,6 +15,9 @@ import static java.util.Arrays.asList;
 
 @Service
 public class DBService {
+
+    @Autowired
+    private BCryptPasswordEncoder pe;
 
     @Autowired
     private CategoriaRepository categoriaRepository;
@@ -91,7 +95,7 @@ public class DBService {
         estadoRepository.saveAll(asList(est1, est2));
         cidadeRepository.saveAll(asList(c1, c2, c3));
 
-        Cliente cli1 = new Cliente(null, "Maria Silva", "diego_biazin@hotmail.com", "36378912377", TipoCliente.PESSOAFISICA);
+        Cliente cli1 = new Cliente(null, "Maria Silva", "diego_biazin@hotmail.com", "36378912377", TipoCliente.PESSOAFISICA, pe.encode("123"));
         cli1.getTelefones().addAll(asList("27363323", "93837393"));
 
         Endereco e1 = new Endereco(null, "Rua Flores", "300", "Apto 10", "Jardim", "38220834", cli1, c1);
