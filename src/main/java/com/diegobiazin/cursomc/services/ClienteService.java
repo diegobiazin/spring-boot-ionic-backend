@@ -5,9 +5,12 @@ import com.diegobiazin.cursomc.DTO.ClienteNewDTO;
 import com.diegobiazin.cursomc.domain.Cidade;
 import com.diegobiazin.cursomc.domain.Cliente;
 import com.diegobiazin.cursomc.domain.Endereco;
+import com.diegobiazin.cursomc.domain.enums.Perfil;
 import com.diegobiazin.cursomc.domain.enums.TipoCliente;
 import com.diegobiazin.cursomc.repositories.ClienteRepository;
 import com.diegobiazin.cursomc.repositories.EnderecoRepository;
+import com.diegobiazin.cursomc.security.UserSS;
+import com.diegobiazin.cursomc.services.exceptions.AuthorizationException;
 import com.diegobiazin.cursomc.services.exceptions.DataIntegrityException;
 import com.diegobiazin.cursomc.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +38,12 @@ public class ClienteService {
     private BCryptPasswordEncoder pe;
 
     public Cliente find(Integer id) {
+
+        UserSS user = UserService.authenticated();
+        if (user==null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
+            throw new AuthorizationException("Acesso negado");
+        }
+
         Optional<Cliente> cliente = clienteRepository.findById(id);
         return cliente.orElseThrow(() -> new ObjectNotFoundException(
                 "Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName()));
