@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
@@ -63,7 +64,7 @@ public class ClienteResource {
     }
 
     @PreAuthorize("hasAnyRole('ADMIN')")
-    @GetMapping(value = "/page")
+    @GetMapping(path = "/page")
     public ResponseEntity<Page<ClienteDTO>> findPage(
             @RequestParam(value = "page", defaultValue = "0") Integer page,
             @RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage,
@@ -73,5 +74,11 @@ public class ClienteResource {
         Page<Cliente> list = clienteService.findPage(page, linesPerPage, orderBy, direction);
         Page<ClienteDTO> listDto = list.map(ClienteDTO::new);
         return ResponseEntity.ok().body(listDto);
+    }
+
+    @PostMapping(path = "/picture")
+    public ResponseEntity<Void> uploadProfilePicture(@RequestParam(name = "file") MultipartFile file) {
+        URI uri = clienteService.uploadProfilePicture(file);
+        return ResponseEntity.created(uri).build();
     }
 }
