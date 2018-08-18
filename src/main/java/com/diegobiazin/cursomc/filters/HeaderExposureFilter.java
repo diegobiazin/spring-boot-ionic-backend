@@ -8,14 +8,17 @@ import java.io.IOException;
 
 @Component
 public class HeaderExposureFilter implements Filter {
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
     }
 
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
+            throws IOException, ServletException {
+
         HttpServletResponse res = (HttpServletResponse) servletResponse;
-        res.addHeader("access-control-expose-headers", "Authorization");
+        res.addHeader("access-control-expose-headers", "location");
         filterChain.doFilter(servletRequest, servletResponse);
     }
 
