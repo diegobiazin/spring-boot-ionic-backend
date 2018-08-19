@@ -3,6 +3,9 @@ package com.diegobiazin.cursomc.resources;
 import com.diegobiazin.cursomc.DTO.CategoriaDTO;
 import com.diegobiazin.cursomc.domain.Categoria;
 import com.diegobiazin.cursomc.services.CategoriaService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -22,12 +25,14 @@ public class CategoriaResource {
     @Autowired
     private CategoriaService categoriaService;
 
+    @ApiOperation(value = "Busca por id")
     @GetMapping(path = "/{id}")
     public ResponseEntity<Categoria> find(@PathVariable Integer id) {
         Categoria obj = categoriaService.find(id);
         return ResponseEntity.ok(obj);
     }
 
+    @ApiOperation(value = "Busca todas as categorias")
     @GetMapping
     public ResponseEntity<List<CategoriaDTO>> findAll() {
         List<Categoria> list = categoriaService.findAll();
@@ -36,6 +41,7 @@ public class CategoriaResource {
     }
 
     @PreAuthorize("hasAnyRole('ADMIN')")
+    @ApiOperation(value = "Insere categoria")
     @PostMapping
     public ResponseEntity<Void> insert(@Valid @RequestBody CategoriaDTO objDto) {
         Categoria obj = categoriaService.fromDto(objDto);
@@ -46,6 +52,7 @@ public class CategoriaResource {
     }
 
     @PreAuthorize("hasAnyRole('ADMIN')")
+    @ApiOperation(value = "Atualiza categoria")
     @PutMapping(path = "/{id}")
     public ResponseEntity<Void> update(@Valid @RequestBody CategoriaDTO objDto, @PathVariable Integer id) {
         Categoria obj = categoriaService.fromDto(objDto);
@@ -55,12 +62,17 @@ public class CategoriaResource {
     }
 
     @PreAuthorize("hasAnyRole('ADMIN')")
+    @ApiOperation(value = "Deleta categoria")
+    @ApiResponses(value = {
+            @ApiResponse(code = 400, message = "Não é possível excluir uma categoria que possui produtos"),
+            @ApiResponse(code = 404, message = "Código inexistente")})
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         categoriaService.delete(id);
         return ResponseEntity.noContent().build();
     }
 
+    @ApiOperation(value = "Busca todas as categorias com paginção")
     @GetMapping(value = "/page")
     public ResponseEntity<Page<CategoriaDTO>> findPage(
             @RequestParam(value = "page", defaultValue = "0") Integer page,
