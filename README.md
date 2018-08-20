@@ -1,11 +1,11 @@
-# Spring Boot / Ionic - Back-End
+# Sistema de Pedidos / Back-End
 
 ## Sinopse
 
 Back-end aplicativo para venda de produtos (PDV). Veja também o [Front-end](https://github.com/diegobiazin/spring-boot-ionic-frontend).
 
 Projeto utilizando boas práticas de Engenharia de Software tais como desenvolvimento em camadas (DDD) e tratamento de exceções.
-Implementação de autenticação e geracao do token JWT, envio de e-mails, comunicação com Amazon S3.
+API Rest usando Java com Spring Boot e banco de dados MySQL. JPA com Hibernate para mapeamento objeto-relacional, envio de email com SMTP da Google, armazenamento de imagens com storage S3 da Amazon, autenticação e autorização com tokens JWT, validação de dados, uso adequado do protocolo HTTP no padrão REST, segurança e CORS.
 
 ## Tecnologias e Frameworks
 * Java
@@ -131,4 +131,4 @@ Implementação de autenticação e geracao do token JWT, envio de e-mails, comu
 
 ## Autor
 
-* **[Diego Biazin](https://github.com/diegobiazin)** - *Projeto Spring Boot / Ionic - Back-End* 
+* **[Diego Biazin](https://github.com/diegobiazin)** - *Sistema de Pedidos / Back-End* 
